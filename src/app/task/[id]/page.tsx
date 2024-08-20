@@ -2,7 +2,7 @@
 // /app/task/[id]/page.tsx
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Task, useTaskStore } from "@/store/store"; // Assuming the Task type is here
+import { Task, useTaskStore } from "@/store/store"; // A
 
 const TaskDetailsPage = ({ params }: { params: { id: string } }) => {
   const router = useRouter();

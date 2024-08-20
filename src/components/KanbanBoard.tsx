@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useTaskStore } from "@/store/store";
 import SortableTaskCard from "./SortableTaskCard";
 import { useRouter } from "next/navigation";
@@ -8,17 +8,13 @@ import { useRouter } from "next/navigation";
 
 const KanbanBoard: React.FC = () => {
   const { tasks, updateTaskStatus, deleteTask } = useTaskStore();
-  const [isClient, setIsClient] = useState(false);
-  const router = useRouter();
 
-  useEffect(() => {
-    setIsClient(true); // Ensures that the component is running on the client side
-  }, []);
+  const router = useRouter();
 
   return (
     <div className="flex justify-between space-x-4">
       {["todo", "in-progress", "done"].map((status) => (
-        <div className="w-1/3 p-2 rounded">
+        <div className="w-1/3 p-2 rounded" key={status}>
           <h2 className="text-lg font-bold mb-2">
             {status.replace("-", " ").toUpperCase()}
           </h2>
