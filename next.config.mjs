@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: "/plan-board",
+  basePath: "/",
   //   output: "export",
 };
 
