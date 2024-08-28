@@ -17,6 +17,7 @@ export type Task = {
 
 export type StatusState = {
   statuses: Status[];
+
   addStatus: (name: string) => void;
   updateStatus: (id: string, name: string) => void;
   deleteStatus: (id: string) => void;
@@ -25,6 +26,7 @@ export type StatusState = {
 
 export type TaskState = {
   tasks: Task[];
+  setTasks: (tasks: Task[]) => void;
   addTask: (title: string, status: Status) => void;
   updateTaskStatus: (id: string, status: Status) => void;
   deleteTask: (id: string) => void;
@@ -82,6 +84,7 @@ const writeStatusesToLocalStorage = (statuses: Status[]): void => {
 
 export const useTaskStore = create<TaskState>((set) => ({
   tasks: readTasksFromLocalStorage(),
+  setTasks: (tasks) => set({ tasks }),
   addTask: (title, status) => {
     set((state) => {
       const newTask: Task = { id: Date.now().toString(), title, status };
@@ -90,15 +93,30 @@ export const useTaskStore = create<TaskState>((set) => ({
       return { tasks: updatedTasks };
     });
   },
-  updateTaskStatus: (id, status) => {
+  updateTaskStatus: (id, newStatusId) => {
     set((state) => {
       const updatedTasks = state.tasks.map((task) =>
-        task.id === id ? { ...task, status } : task
-      );
+        task.id === id
+          ? { ...task, status: { ...task.status, id: newStatusId } }
+          : task
+      ) as Task[]; // Ensure this is explicitly cast to Task[]
+
       writeTasksToLocalStorage(updatedTasks);
+
+      // Ensure we are returning a valid TaskState object
       return { tasks: updatedTasks };
     });
   },
+
+  // updateTaskStatus: (id, status) => {
+  //   set((state) => {
+  //     const updatedTasks = state.tasks.map((task) =>
+  //       task.id === id ? { ...task, status } : task
+  //     );
+  //     writeTasksToLocalStorage(updatedTasks);
+  //     return { tasks: updatedTasks };
+  //   });
+  // },
   deleteTask: (id) => {
     set((state) => {
       const updatedTasks = state.tasks.filter((task) => task.id !== id);

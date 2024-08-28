@@ -2,6 +2,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { Task } from "@/store/store";
+import { DeleteOutlined } from "@ant-design/icons";
 
 interface TaskCardProps {
   task: Task;
@@ -15,27 +16,33 @@ const TaskCard: React.FC<TaskCardProps> = ({
   handlePageChange,
 }) => {
   return (
-    <div
-      onClick={handlePageChange}
-      className="p-4 mb-2 bg-gray-800 rounded-lg shadow-lg cursor-pointer hover:bg-gray-700 transition duration-200 ease-in-out"
-    >
-      <h3 className="font-bold text-white mb-2">{task.title}</h3>
-      <p className="text-gray-400">
-        Status:{" "}
-        <span className="capitalize text-gray-300">
+    <div className="p-4 mb-2 bg-gray-800 rounded-lg shadow-lg cursor-pointer hover:bg-gray-700 transition duration-200 ease-in-out">
+      <h3 className="font-bold text-white mb-2" onClick={handlePageChange}>
+        {task.title}
+      </h3>
+      <div className="flex items-start justify-start">
+        <p className="text-gray-400">Status: </p>
+        <span className="capitalize text-gray-300 ml-1">
           {task.status.name.replace("-", " ")}
         </span>
-      </p>
+      </div>
       {deleteTask && (
-        <button
+        // <button
+        //   onClick={(e) => {
+        //     e.stopPropagation();
+        //     deleteTask(task.id);
+        //   }}
+        //   className="mt-2 text-sm text-red-500 hover:underline"
+        // >
+        //   Delete
+        // </button>
+        <DeleteOutlined
+          className="text-red-500 hover:text-red-700 transition-colors duration-300 hover:scale-110 transform cursor-pointer mt-2 text-sm  hover:underline"
           onClick={(e) => {
             e.stopPropagation();
             deleteTask(task.id);
           }}
-          className="mt-2 text-sm text-red-500 hover:underline"
-        >
-          Delete
-        </button>
+        />
       )}
     </div>
   );
