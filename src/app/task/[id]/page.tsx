@@ -2,7 +2,8 @@
 // /app/task/[id]/page.tsx
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Task, useTaskStore } from "@/store/store"; // A
+import { Task, useStatusStore, useTaskStore } from "@/store/store"; // A
+import { Select } from "antd";
 
 const TaskDetailsPage = ({ params }: { params: { id: string } }) => {
   const router = useRouter();
@@ -10,10 +11,14 @@ const TaskDetailsPage = ({ params }: { params: { id: string } }) => {
   const [task, setTask] = useState<Task | undefined>(undefined);
   const [title, setTitle] = useState("");
 
+  const { tasks } = useTaskStore();
+  const { statuses } = useStatusStore();
+
   useEffect(() => {
     const tasks = useTaskStore.getState().tasks; // Access your store's state
     const foundTask = tasks.find((t) => t.id === id);
     setTask(foundTask);
+    setTitle(foundTask?.title || "");
   }, [id]);
 
   if (!task) return <div>Task not found.</div>;
@@ -44,7 +49,7 @@ const TaskDetailsPage = ({ params }: { params: { id: string } }) => {
           Status
         </label>
         {/* / drop down */}
-        <select
+        {/* <select
           value={task.status}
           onChange={(e) => {
             const newStatus = e.target.value as "todo" | "in-progress" | "done";
@@ -61,7 +66,32 @@ const TaskDetailsPage = ({ params }: { params: { id: string } }) => {
           <option value="todo">To Do</option>
           <option value="in-progress">In Progress</option>
           <option value="done">Done</option>
-        </select>
+        </select> */}
+        <Select
+          value={task.status.id}
+          onChange={(value) => {
+            const selectedStatus = statuses.find(
+              (status) => status.id === value
+            );
+            if (selectedStatus) {
+              // Setting the entire status object
+              // useTaskStore.getState().updateTaskStatus(task.id, selectedStatus);
+              // refresh the store task status
+              setTask((prev) => {
+                if (!prev) return prev;
+                return { ...prev, status: selectedStatus };
+              });
+            }
+          }}
+          style={{ width: "100%" }}
+          // className="border border-gray-300 p-2 m-2 cursor-pointer text-gray-600"
+        >
+          {statuses.map((status) => (
+            <Select.Option key={status.id} value={status.id}>
+              {status.name.replace("-", " ").toUpperCase()}
+            </Select.Option>
+          ))}
+        </Select>
       </div>
       <button
         onClick={() => {
@@ -76,8 +106,15 @@ const TaskDetailsPage = ({ params }: { params: { id: string } }) => {
       </button>
       <button
         onClick={() => {
-          useTaskStore.getState().updateTitle(task.id, title);
+          // if there is change in title
+          // do update else do nothing
+          if (task.title !== title) {
+            useTaskStore.getState().updateTitle(task.id, title);
+          }
           useTaskStore.getState().updateTaskStatus(task.id, task.status);
+
+          // redirect to home page
+          router.push("/");
         }}
         className="bg-green-500 text-white px-4 py-2 rounded"
       >

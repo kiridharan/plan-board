@@ -23,7 +23,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
       <p className="text-gray-400">
         Status:{" "}
         <span className="capitalize text-gray-300">
-          {task.status.replace("-", " ")}
+          {task.status.name.replace("-", " ")}
         </span>
       </p>
       {deleteTask && (
