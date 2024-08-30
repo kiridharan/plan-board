@@ -1,3 +1,4 @@
+"use client";
 // /components/SortableTaskCard.tsx
 import React from "react";
 import { useSortable } from "@dnd-kit/sortable";
@@ -8,13 +9,13 @@ import { Task, useTaskStore } from "@/store/store";
 interface TaskCardProps {
   task: Task;
   deleteTask?: (id: string) => void;
-  handlePageChange: () => void;
+  // handlePageChange: () => void;
 }
 
 const SortableTaskCard: React.FC<TaskCardProps> = ({
   task,
   deleteTask,
-  handlePageChange,
+  // handlePageChange,
 }) => {
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: task.id });
@@ -29,7 +30,7 @@ const SortableTaskCard: React.FC<TaskCardProps> = ({
       <TaskCard
         task={task}
         deleteTask={deleteTask}
-        handlePageChange={handlePageChange}
+        // handlePageChange={handlePageChange}
       />
       {/* / change status */}
     </div>

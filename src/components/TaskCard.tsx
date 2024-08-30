@@ -1,25 +1,33 @@
+"use client";
 // /components/TaskCard.tsx
 import React from "react";
-import { useRouter } from "next/router";
+import router, { useRouter } from "next/router";
 import { Task } from "@/store/store";
 import { DeleteOutlined } from "@ant-design/icons";
 
 interface TaskCardProps {
   task: Task;
   deleteTask?: (id: string) => void;
-  handlePageChange: () => void;
+  // handlePageChange: () => void;
 }
 
 const TaskCard: React.FC<TaskCardProps> = ({
   task,
   deleteTask,
-  handlePageChange,
+  // handlePageChange,
 }) => {
   return (
-    <div className="p-4 mb-2 bg-gray-800 rounded-lg shadow-lg cursor-pointer hover:bg-gray-700 transition duration-200 ease-in-out">
-      <h3 className="font-bold text-white mb-2" onClick={handlePageChange}>
-        {task.title}
-      </h3>
+    <div
+      className="p-4 mb-2 bg-gray-800 rounded-lg shadow-lg cursor-pointer hover:bg-gray-700 transition duration-200 ease-in-out"
+      onClick={(e) => {
+        e.stopPropagation();
+        console.log(`Navigating to /task/${task.id}`);
+        router.push(`/task/${task.id}`);
+      }}
+    >
+      <div>
+        <h3 className="font-bold text-white mb-2">{task.title}</h3>
+      </div>
       <div className="flex items-start justify-start">
         <p className="text-gray-400">Status: </p>
         <span className="capitalize text-gray-300 ml-1">

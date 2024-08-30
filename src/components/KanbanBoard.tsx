@@ -8,7 +8,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import SortableTaskCard from "./SortableTaskCard";
-import { Status, useStatusStore, useTaskStore } from "@/store/store";
+import { Status, Task, useStatusStore, useTaskStore } from "@/store/store";
 import { DeleteOutlined } from "@ant-design/icons";
 import router from "next/router";
 
@@ -24,6 +24,12 @@ const KanbanBoard: React.FC = () => {
     const activeTask = tasks.find((task) => task.id === active.id);
     const overContainerId = over.data.current?.sortable.containerId;
 
+    if (active.id !== over.id) {
+      const oldIndex = tasks.findIndex((task) => task.id === active.id);
+      const newIndex = tasks.findIndex((task) => task.id === over.id);
+
+      setTasks(arrayMove(tasks, oldIndex, newIndex));
+    }
     if (
       activeTask &&
       overContainerId &&
@@ -31,6 +37,10 @@ const KanbanBoard: React.FC = () => {
     ) {
       updateTaskStatus(activeTask.id, overContainerId);
     }
+  };
+
+  const handlePageChange = (task: Task) => {
+    router.push(`/task/${task.id}`);
   };
 
   return (
@@ -64,7 +74,10 @@ const KanbanBoard: React.FC = () => {
                     <SortableTaskCard
                       key={task.id}
                       task={task}
-                      handlePageChange={() => router.push(`/task/${task.id}`)}
+                      deleteTask={(id) =>
+                        useTaskStore.getState().deleteTask(id)
+                      }
+                      // handlePageChange={() => handlePageChange(task)}
                     />
                   ))}
               </div>
