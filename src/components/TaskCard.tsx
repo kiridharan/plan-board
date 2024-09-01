@@ -8,7 +8,7 @@ import { DeleteOutlined } from "@ant-design/icons";
 interface TaskCardProps {
   task: Task;
   deleteTask?: (id: string) => void;
-  // handlePageChange: () => void;
+  handlePageChange: () => void;
 }
 
 const TaskCard: React.FC<TaskCardProps> = ({
