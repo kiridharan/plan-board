@@ -1,30 +1,6 @@
 "use client";
-// import CreateTaskModal from "@/components/CreateTaskModal";
-// // import KanbanBoard from "@/components/KanbanBoard";
-// import dynamic from "next/dynamic";
-// // import { NextSeo } from "next-seo";
-// const KanbanBoard = dynamic(() => import("../components/KanbanBoard"), {
-//   ssr: false,
-// });
 
-// export default function Home() {
-//   return (
-//     <div>
-//       {/* <NextSeo
-//         title="Simple Usage Example"
-//         description="A short description goes here."
-//         canonical="https://www.canonical.ie/"
-//       /> */}
-//       <div className="flex items-center justify-center p-10">
-//         <h1 className="text-4xl font-bold text-center">Task Board</h1>
-//         <CreateTaskModal />
-//       </div>
-//       <KanbanBoard />
-//     </div>
-//   );
-
-// }
-
+import { useRouter } from "next/navigation";
 import React, {
   Dispatch,
   SetStateAction,
@@ -33,19 +9,28 @@ import React, {
   FormEvent,
 } from "react";
 
-import { motion } from "framer-motion";
-
-import { CardType } from "@/types/types";
-import { AddCard } from "@/components/AddCard";
-import KanbanBoard from "@/components/KanbanBoard";
-
+import { FcTodoList } from "react-icons/fc";
 export default function Home() {
+  const router = useRouter();
   return (
     <div
       className="h-screen w-full bg-neutral-900 text-neutral-50
     flex flex-col pt-10 justify-start items-center"
     >
-      <KanbanBoard />
+      {/* / create a card which routes to task-app */}
+      <div
+        className="h-56 w-56 shrink-0 place-content-center rounded border text-3xl border-neutral-500 bg-neutral-500/20 text-neutral-500
+      hover:bg-neutral-500/30 hover:text-neutral-500/90
+       flex-col
+      justify-center items-center flex cursor-pointer"
+        onClick={() => {
+          // redirect to task-app
+          router.push("/task-app");
+        }}
+      >
+        <FcTodoList />
+        <h2 className="text-center text-lg font-semibold">Todo</h2>
+      </div>
     </div>
   );
 }
