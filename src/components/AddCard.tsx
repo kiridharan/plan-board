@@ -1,7 +1,7 @@
 "use client";
 
 import { useCardStore } from "@/store/store";
-import { AddCardProps, CardType, ColumnType } from "@/types/types";
+import { AddCardProps,  ColumnType } from "@/types/types";
 import { motion } from "framer-motion";
 import { FormEvent, useEffect, useState } from "react";
 import { FiPlus } from "react-icons/fi";
