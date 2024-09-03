@@ -13,39 +13,37 @@ interface TimezoneStore {
 }
 
 // Initialize the store
-const useClockStore = create<TimezoneStore>()(
-  devtools(
-    persist(
-      (set) => ({
-        timezones: [
-          "America/New_York",
-          "Europe/London",
-          "Asia/Tokyo",
-          "America/Chicago", // Houston
-          "Asia/Kolkata", // India
-          "Asia/Singapore", // Singapore
-        ],
-        selectedTimezones: ["America/Chicago"], // Default timezone (Houston)
-        addTimezone: (timezone) =>
-          set((state) => {
-            const newTimezones = [...state.selectedTimezones, timezone];
-            return { selectedTimezones: newTimezones };
-          }),
-        removeTimezone: (timezone) =>
-          set((state) => {
-            const newTimezones = state.selectedTimezones.filter(
-              (tz) => tz !== timezone
-            );
-            return { selectedTimezones: newTimezones };
-          }),
-        setSelectedTimezones: (timezones) =>
-          set({ selectedTimezones: timezones }),
-      }),
-      {
-        name: "timezone-store", // Key for local storage
-      }
-    )
+export const useClockStore = create<TimezoneStore>()(
+  persist(
+    (set) => ({
+      timezones: [
+        "America/Toronto",
+        "America/Vancouver",
+        "America/New_York",
+        "Europe/London",
+        "Asia/Tokyo",
+        "America/Chicago", // Houston
+        "Asia/Kolkata", // India
+        "Asia/Singapore", // Singapore
+      ],
+      selectedTimezones: ["America/Toronto"], // Default timezone (Houston)
+      addTimezone: (timezone) =>
+        set((state) => {
+          const newTimezones = [...state.selectedTimezones, timezone];
+          return { selectedTimezones: newTimezones };
+        }),
+      removeTimezone: (timezone) =>
+        set((state) => {
+          const newTimezones = state.selectedTimezones.filter(
+            (tz) => tz !== timezone
+          );
+          return { selectedTimezones: newTimezones };
+        }),
+      setSelectedTimezones: (timezones) =>
+        set({ selectedTimezones: timezones }),
+    }),
+    {
+      name: "timezone-store", // Key for local storage
+    }
   )
 );
-
-export default useClockStore;

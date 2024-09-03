@@ -32,12 +32,7 @@ import React, {
   DragEvent,
   FormEvent,
 } from "react";
-
-import { motion } from "framer-motion";
-
-import { CardType } from "@/types/types";
-import { AddCard } from "@/components/AddCard";
-import KanbanBoard from "@/components/KanbanBoard";
+import KanbanBoard from "@/components/Task/KanbanBoard";
 
 export default function Home() {
   return (
