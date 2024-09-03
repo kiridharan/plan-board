@@ -67,22 +67,6 @@ const WorldClock: React.FC = () => {
       ) : (
         <>
           <h1 className="text-4xl font-bold mb-8">World Clock</h1>
-
-          <div className="mb-4">
-            <Select
-              placeholder="Select a timezone to add"
-              style={{ width: 300 }}
-              onChange={handleAddTimezone}
-              allowClear
-            >
-              {timezones.map((timezone) => (
-                <Option key={timezone} value={timezone}>
-                  {timezone}
-                </Option>
-              ))}
-            </Select>
-          </div>
-
           <div className="flex flex-wrap justify-center gap-8 mb-4">
             {selectedTimezones.map((timezone) => {
               const { hours, minutes, seconds } = currentTime[timezone] || {
