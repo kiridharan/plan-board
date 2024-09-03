@@ -1,6 +1,7 @@
 import { CardType } from "@/types/types";
 import { FiPlus, FiTrash } from "react-icons/fi";
 import { FaFire } from "react-icons/fa";
+import { AiFillDelete } from "react-icons/ai";
 import React, {
   Dispatch,
   SetStateAction,
@@ -8,12 +9,13 @@ import React, {
   DragEvent,
   FormEvent,
 } from "react";
-export const BurnBarrel = ({
-  setCards,
-}: {
-  setCards: Dispatch<SetStateAction<CardType[]>>;
-}) => {
+import { useCardStore } from "@/store/store";
+export const BurnBarrel = () => {
   const [active, setActive] = useState(false);
+  const [cards, setCards] = useCardStore((state) => [
+    state.cards,
+    state.setCards,
+  ]);
 
   const handleDragOver = (e: DragEvent) => {
     e.preventDefault();
@@ -28,7 +30,7 @@ export const BurnBarrel = ({
     const cardId = e.dataTransfer?.getData("cardId");
 
     if (cardId) {
-      setCards((pv) => pv.filter((c) => c.id !== cardId));
+      setCards(cards.filter((card: CardType) => card.id !== cardId));
     }
 
     setActive(false);
@@ -45,7 +47,7 @@ export const BurnBarrel = ({
           : "border-neutral-500 bg-neutral-500/20 text-neutral-500"
       }`}
     >
-      {active ? <FaFire className="animate-bounce" /> : <FiTrash />}
+      {active ? <AiFillDelete className="animate-bounce" /> : <FiTrash />}
     </div>
   );
 };

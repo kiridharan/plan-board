@@ -1,27 +1,43 @@
-import { AddCardProps } from "@/types/types";
+"use client";
+
+import { useCardStore } from "@/store/store";
+import { AddCardProps, CardType, ColumnType } from "@/types/types";
 import { motion } from "framer-motion";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { FiPlus } from "react-icons/fi";
 
-export const AddCard = ({ column, setCards }: AddCardProps) => {
+export const AddCard = ({ column }: AddCardProps) => {
   const [text, setText] = useState("");
   const [adding, setAdding] = useState(false);
-
+  const { addCard } = useCardStore();
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!text.trim().length) return;
+    // click enter to add card
 
-    const newCard = {
-      column,
-      title: text.trim(),
-      id: Math.random().toString(),
-    };
+    const trimmedText = text.trim();
+    if (!trimmedText) return;
 
-    setCards((pv: any) => [...pv, newCard]);
+    addCard(trimmedText, column as ColumnType);
 
     setAdding(false);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Enter" && adding) {
+        e.preventDefault();
+        handleSubmit({
+          preventDefault: () => {},
+        } as FormEvent<HTMLFormElement>); // Create a dummy event for handleSubmit
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [adding, text]);
 
   return (
     <>
@@ -52,6 +68,8 @@ export const AddCard = ({ column, setCards }: AddCardProps) => {
       ) : (
         <motion.button
           layout
+          // press enter to add card
+
           onClick={() => setAdding(true)}
           className="flex w-full items-center gap-1.5 px-3 py-1.5 text-xs text-neutral-400 transition-colors hover:text-neutral-50"
         >

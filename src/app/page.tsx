@@ -37,42 +37,15 @@ import { motion } from "framer-motion";
 
 import { CardType } from "@/types/types";
 import { AddCard } from "@/components/AddCard";
-import { Board } from "@/components/KanbanBoard";
+import KanbanBoard from "@/components/KanbanBoard";
 
 export default function Home() {
   return (
-    <div className="h-screen w-full bg-neutral-900 text-neutral-50">
-      <Board />
+    <div
+      className="h-screen w-full bg-neutral-900 text-neutral-50
+    flex flex-col pt-10 justify-start items-center"
+    >
+      <KanbanBoard />
     </div>
   );
 }
-
-export const DEFAULT_CARDS: CardType[] = [
-  // BACKLOG
-  { title: "Look into render bug in dashboard", id: "1", column: "backlog" },
-  { title: "SOX compliance checklist", id: "2", column: "backlog" },
-  { title: "[SPIKE] Migrate to Azure", id: "3", column: "backlog" },
-  { title: "Document Notifications service", id: "4", column: "backlog" },
-  // TODO
-  {
-    title: "Research DB options for new microservice",
-    id: "5",
-    column: "todo",
-  },
-  { title: "Postmortem for outage", id: "6", column: "todo" },
-  { title: "Sync with product on Q3 roadmap", id: "7", column: "todo" },
-
-  // DOING
-  {
-    title: "Refactor context providers to use Zustand",
-    id: "8",
-    column: "doing",
-  },
-  { title: "Add logging to daily CRON", id: "9", column: "doing" },
-  // DONE
-  {
-    title: "Set up DD dashboards for Lambda listener",
-    id: "10",
-    column: "done",
-  },
-];

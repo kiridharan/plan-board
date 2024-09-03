@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 
 export type AddCardProps = {
   column: ColumnType;
-  setCards: Dispatch<SetStateAction<CardType[]>>;
+  // setCards: Dispatch<SetStateAction<CardType[]>>;
 };
 
 export type ColumnType = "backlog" | "todo" | "doing" | "done";

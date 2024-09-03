@@ -1,23 +1,21 @@
+import React, { DragEvent, useState } from "react";
 import { CardType, ColumnProps } from "@/types/types";
 import { AddCard } from "./AddCard";
 import { DropIndicator } from "./DropIndicator";
-
-import React, {
-  Dispatch,
-  SetStateAction,
-  useState,
-  DragEvent,
-  FormEvent,
-} from "react";
 import { Card } from "./TaskCard";
+import { useCardStore } from "@/store/store";
+// Import your Zustand store
+
 export const Column = ({
   title,
   headingColor,
-  cards,
   column,
-  setCards,
-}: ColumnProps) => {
+}: Omit<ColumnProps, "cards" | "setCards">) => {
   const [active, setActive] = useState(false);
+
+  // Access Zustand store
+  const cards = useCardStore((state) => state.cards);
+  const setCards = useCardStore((state) => state.setCards);
 
   const handleDragStart = (e: DragEvent, card: CardType) => {
     e.dataTransfer.setData("cardId", card.id);
@@ -61,13 +59,11 @@ export const Column = ({
   const handleDragOver = (e: DragEvent) => {
     e.preventDefault();
     highlightIndicator(e);
-
     setActive(true);
   };
 
   const clearHighlights = (els?: HTMLElement[]) => {
     const indicators = els || getIndicators();
-
     indicators.forEach((i) => {
       i.style.opacity = "0";
     });
@@ -75,23 +71,17 @@ export const Column = ({
 
   const highlightIndicator = (e: DragEvent) => {
     const indicators = getIndicators();
-
     clearHighlights(indicators);
-
     const el = getNearestIndicator(e, indicators);
-
     el.element.style.opacity = "1";
   };
 
   const getNearestIndicator = (e: DragEvent, indicators: HTMLElement[]) => {
     const DISTANCE_OFFSET = 50;
-
     const el = indicators.reduce(
       (closest, child) => {
         const box = child.getBoundingClientRect();
-
         const offset = e.clientY - (box.top + DISTANCE_OFFSET);
-
         if (offset < 0 && offset > closest.offset) {
           return { offset: offset, element: child };
         } else {
@@ -103,7 +93,6 @@ export const Column = ({
         element: indicators[indicators.length - 1],
       }
     );
-
     return el;
   };
 
@@ -120,12 +109,12 @@ export const Column = ({
     setActive(false);
   };
 
-  const filteredCards = cards.filter((c) => c.column === column);
+  const filteredCards = cards.filter((c: any) => c.column === column);
 
   return (
     <div className="w-56 shrink-0">
       <div className="mb-3 flex items-center justify-between">
-        <h3 className={`font-medium ${headingColor}`}>{title}</h3>
+        <h3 className={`font-medium ${headingColor}`}>{title.toUpperCase()}</h3>
         <span className="rounded text-sm text-neutral-400">
           {filteredCards.length}
         </span>
@@ -138,11 +127,11 @@ export const Column = ({
           active ? "bg-neutral-800/50" : "bg-neutral-800/0"
         }`}
       >
-        {filteredCards.map((c) => {
+        {filteredCards.map((c: any) => {
           return <Card key={c.id} {...c} handleDragStart={handleDragStart} />;
         })}
         <DropIndicator beforeId={null} column={column} />
-        <AddCard column={column} setCards={setCards} />
+        <AddCard column={column} />
       </div>
     </div>
   );
