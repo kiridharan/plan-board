@@ -31,3 +31,41 @@ body {
     text-wrap: balance;
   }
 }
+
+
+/* @keyframes tick {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-clock {
+  animation: tick 60s linear infinite;
+} */
+
+/* styles/globals.css */
+
+.fade-text {
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  border-top: 4px solid white;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
