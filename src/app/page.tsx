@@ -39,7 +39,7 @@ export default function Home() {
       />
       <CardComponent
         icon={<FcCalendar size={50} />}
-        title="Clock App"
+        title="Calender App"
         onClick={() => router.push("/calender-app")}
       />
     </div>
