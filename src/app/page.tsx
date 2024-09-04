@@ -9,8 +9,9 @@ import React, {
   FormEvent,
 } from "react";
 
-import { FcTodoList, FcDisplay } from "react-icons/fc";
+import { FcTodoList, FcDisplay, FcCalendar } from "react-icons/fc";
 import DateTimeCard from "@/components/Clock/DateTimeCard";
+import { CardComponent } from "@/components/CardComponent";
 export default function Home() {
   const router = useRouter();
   return (
@@ -36,29 +37,11 @@ export default function Home() {
         title="Clock App"
         onClick={() => router.push("/clock-app")}
       />
+      <CardComponent
+        icon={<FcCalendar size={50} />}
+        title="Clock App"
+        onClick={() => router.push("/calender-app")}
+      />
     </div>
   );
 }
-
-const CardComponent = ({
-  icon,
-  title,
-  onClick,
-}: {
-  icon: JSX.Element;
-  title: string;
-  onClick: () => void;
-}) => {
-  return (
-    <div
-      className="h-56 w-56 shrink-0 place-content-center rounded border text-3xl border-neutral-500 bg-neutral-500/20 text-neutral-500
-    hover:bg-neutral-500/30 hover:text-neutral-500/90
-     flex-col
-    justify-center items-center flex cursor-pointer"
-      onClick={onClick}
-    >
-      {icon}
-      <h2 className="text-center text-lg font-semibold">{title}</h2>
-    </div>
-  );
-};

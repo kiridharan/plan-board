@@ -29,3 +29,10 @@ export type DropIndicatorProps = {
   beforeId: string | null;
   column: string;
 };
+
+export interface CalendarEvent {
+  id: number;
+  title: string;
+  start: Date;
+  end: Date;
+}
