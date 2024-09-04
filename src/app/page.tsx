@@ -9,7 +9,7 @@ import React, {
   FormEvent,
 } from "react";
 
-import { FcTodoList, FcDisplay, FcCalendar } from "react-icons/fc";
+import { FcTodoList, FcDisplay, FcCalendar, FcPlanner } from "react-icons/fc";
 import DateTimeCard from "@/components/Clock/DateTimeCard";
 import { CardComponent } from "@/components/CardComponent";
 export default function Home() {
@@ -41,6 +41,12 @@ export default function Home() {
         icon={<FcCalendar size={50} />}
         title="Calender App"
         onClick={() => router.push("/calender-app")}
+      />
+
+      <CardComponent
+        icon={<FcPlanner size={50} />}
+        title="Plan App"
+        onClick={() => router.push("/plan-board")}
       />
     </div>
   );
