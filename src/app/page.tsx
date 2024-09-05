@@ -46,7 +46,7 @@ export default function Home() {
       <CardComponent
         icon={<FcPlanner size={50} />}
         title="Plan App"
-        onClick={() => router.push("/plan-board")}
+        onClick={() => router.push("/task-board")}
       />
     </div>
   );
