@@ -103,6 +103,8 @@ const CalendarComponent: React.FC = () => {
 
   const onNavigate = (date: Date) => {
     handleSelectSlot({ start: date, end: date });
+    // setEventDetails({ ...eventDetails, date, date });
+    // setEventDetails({ ...eventDetails, start: date, end: date });
   };
 
   return (
@@ -122,11 +124,11 @@ const CalendarComponent: React.FC = () => {
         selectable
         resizable
         views={["month", "week", "day"]} // Ensure these are correct and match expected values
-        onNavigate={
-          (e) => {
-            onNavigate(e);
-          } // Set onNavigate correct
-        }
+        // onNavigate={
+        //   (e) => {
+        //     onNavigate(e);
+        //   } // Set onNavigate correct
+        // }
         view={view}
         onView={
           (e) => {
